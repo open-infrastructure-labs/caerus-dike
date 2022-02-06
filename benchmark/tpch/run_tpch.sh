@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source ../../spark/docker/spark_version
 source ../../spark/docker/setup.sh
 
 if [ "$#" -lt 1 ]; then

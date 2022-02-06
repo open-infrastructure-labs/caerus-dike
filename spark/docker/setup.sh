@@ -18,7 +18,6 @@
 ROOT_DIR=$(pwd)
 DOCKER_DIR=docker
 DOCKER_FILE="${DOCKER_DIR}/Dockerfile"
-SPARK_VERSION="3.2.0"
 USER_NAME=${SUDO_USER:=$USER}
 USER_ID=$(id -u "${USER_NAME}")
 

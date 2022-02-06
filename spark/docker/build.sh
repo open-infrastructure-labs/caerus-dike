@@ -14,7 +14,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+source spark_version
+echo "SPARK_VERSION $SPARK_VERSION"
 ROOT_DIR=$(pwd)
 
 DOCKER_DIR=${ROOT_DIR}
@@ -61,10 +62,10 @@ fi
 echo "User id is: $USER_ID"
 echo "Group id is: $GROUP_ID"
 
-docker build -f Dockerfile --target builder -t spark_build .
+docker build -f Dockerfile --target builder --build-arg SPARK_VERSION=$SPARK_VERSION -t spark_build .
 echo "Done building spark_build docker"
 
-docker build -f Dockerfile -t spark_run .
+docker build -f Dockerfile --build-arg SPARK_VERSION=$SPARK_VERSION -t spark_run .
 echo "Done building spark_run docker"
 
 # Set the home directory in the Docker container.

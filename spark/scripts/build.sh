@@ -30,8 +30,8 @@ if [ "$1" == "spark" ]; then
   fi
   # Extract our built package into our install directory.
   echo "Extracting $SPARK_PACKAGE to $SPARK_HOME"
-  tar -xzf spark-3.2.0-bin-hadoop2.7.tgz -C /build \
-    && mv $SPARK_BUILD/spark-3.2.0-bin-hadoop2.7 $SPARK_HOME
+  tar -xzf $SPARK_PACKAGE -C /build \
+    && mv $SPARK_BUILD/$SPARK_PACKAGE_FOLDER $SPARK_HOME
   popd
 else
   echo "Building spark"

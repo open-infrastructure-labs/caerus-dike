@@ -1,5 +1,6 @@
 #!/bin/bash
 # Bring in environment including ${ROOT_DIR} etc.
+source ../../spark/docker/spark_version
 source ../../spark/docker/setup.sh
 if [ ! -d tpch-spark/lib ]; then
   mkdir tpch-spark/lib
