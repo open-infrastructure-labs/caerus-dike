@@ -62,7 +62,7 @@ fi
 echo "User id is: $USER_ID"
 echo "Group id is: $GROUP_ID"
 
-docker build -f Dockerfile --target v${DIKE_VERSION}_builder --build_arg SPARK_VERSION=$SPARK_VERSION -t v${DIKE_VERSION}_spark_build .
+docker build -f Dockerfile --target v${DIKE_VERSION}_builder --build-arg SPARK_VERSION=$SPARK_VERSION -t v${DIKE_VERSION}_spark_build .
 echo "Done building v${DIKE_VERSION}_spark_build docker"
 
 docker build -f Dockerfile --build-arg SPARK_VERSION=$SPARK_VERSION -t v${DIKE_VERSION}_spark_run .

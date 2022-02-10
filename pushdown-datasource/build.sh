@@ -28,9 +28,6 @@ if [ ! -f $DIKECLIENTJAR ]; then
 fi
 cp $DIKECLIENTJAR pushdown-datasource/lib
 
-# Bring in environment including ${ROOT_DIR} etc.
-source ../spark/docker/setup.sh
-
 if [ "$#" -gt 0 ]; then
   if [ "$1" == "-d" ]; then
     shift
@@ -44,7 +41,7 @@ if [ "$#" -gt 0 ]; then
       -v "${ROOT_DIR}/build/.ivy2:${DOCKER_HOME_DIR}/.ivy2" \
       -u "${USER_ID}" \
       --entrypoint /bin/bash -w /pushdown-datasource/pushdown-datasource\
-      spark-build-${USER_NAME}
+      "v${DIKE_VERSION}-spark-build-${USER_NAME}"
   fi
 else
   echo "Building pushdown-datasource"
@@ -58,5 +55,5 @@ else
     -v "${ROOT_DIR}/build/.ivy2:${DOCKER_HOME_DIR}/.ivy2" \
     -u "${USER_ID}" \
     --entrypoint /pushdown-datasource/scripts/build.sh -w /pushdown-datasource/pushdown-datasource \
-    spark-build-${USER_NAME}
+    "v${DIKE_VERSION}-spark-build-${USER_NAME}"
 fi
