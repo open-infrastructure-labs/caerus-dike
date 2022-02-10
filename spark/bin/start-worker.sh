@@ -1,6 +1,6 @@
 #!/bin/bash
-bin/spark-class org.apache.spark.deploy.worker.Worker spark://sparkmaster:7077 > /opt/volume/logs/worker.log 2>&1 &
-
+./sbin/start-worker.sh spark://sparkmaster:7077 > /opt/volume/logs/worker.log 2>&1 &
+# --properties-file /conf/spark-defaults.conf
 echo "SPARK_WORKER_READY"
 echo "SPARK_WORKER_READY" > /opt/volume/status/SPARK_WORKER_STATE
 

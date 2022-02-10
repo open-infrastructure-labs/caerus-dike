@@ -14,7 +14,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+DIKE_VERSION=1
+echo "VERSION: ${DIKE_VERSION}"
 ROOT_DIR=$(pwd)
 DOCKER_DIR=docker
 DOCKER_FILE="${DOCKER_DIR}/Dockerfile"

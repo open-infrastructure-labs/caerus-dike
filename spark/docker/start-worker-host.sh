@@ -49,15 +49,17 @@ fi
 
 DOCKER_RUN="docker run ${DOCKER_IT} --rm -p 8081:8081 \
   --expose 7012 --expose 7013 --expose 7014 --expose 7015 --expose 8881 \
-  --name sparkworker \
-  --network dike-net --ip ${WORKER_IP} ${DOCKER_HOSTS} \
+  --name sparkworker $WORKER_CPUS \
+  --network host ${DOCKER_HOSTS} \
   -e SPARK_CONF_DIR=/conf \
       -e SPARK_WORKER_INSTANCES=$WORKERS \
       -e SPARK_WORKER_CORES=$CORES \
       -e SPARK_WORKER_MEMORY=8g \
       -e SPARK_WORKER_PORT=8881 \
+      -e SPARK_WORKER_IP=$WORKER_IP \
       -e SPARK_WORKER_WEBUI_PORT=8081 \
       -e SPARK_PUBLIC_DNS=localhost \
+      -e HDFS_PATH=dikehdfs \
   --mount type=bind,source="$(pwd)"/spark,target=/spark \
   --mount type=bind,source=$(pwd)/build,target=/build \
   -v ${ROOT_DIR}/conf/worker:/conf \
@@ -72,7 +74,7 @@ DOCKER_RUN="docker run ${DOCKER_IT} --rm -p 8081:8081 \
   -v ${ROOT_DIR}/bin/:${DOCKER_HOME_DIR}/bin \
   -e RUNNING_MODE=${RUNNING_MODE} \
   -u ${USER_ID} \
-  spark-run-${USER_NAME} ${CMD}"
+  v${DIKE_VERSION}-spark-run-${USER_NAME} ${CMD}"
 
 
 if [ $RUNNING_MODE = "interactive" ]; then

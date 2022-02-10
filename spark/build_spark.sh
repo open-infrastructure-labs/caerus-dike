@@ -27,7 +27,7 @@ if [[ "$1" == "-d" ]]; then
   -v "${ROOT_DIR}/build/.cache:${DOCKER_HOME_DIR}/.cache" \
   -v "${ROOT_DIR}/build/.ivy2:${DOCKER_HOME_DIR}/.ivy2" \
   -u "${USER_ID}" \
-  "spark-build-${USER_NAME}" $@
+  "v${DIKE_VERSION}-spark-build-${USER_NAME}" $@
 else
   echo "Starting build for $@"
   cd docker
@@ -45,5 +45,5 @@ else
   -v "${ROOT_DIR}/build/.cache:${DOCKER_HOME_DIR}/.cache" \
   -v "${ROOT_DIR}/build/.ivy2:${DOCKER_HOME_DIR}/.ivy2" \
   -u "${USER_ID}" \
-  "spark-build-${USER_NAME}" /scripts/build.sh spark
+  "v${DIKE_VERSION}-spark-build-${USER_NAME}" /scripts/build.sh spark
 fi

@@ -17,7 +17,7 @@
 source spark_version
 echo "SPARK_VERSION $SPARK_VERSION"
 ROOT_DIR=$(pwd)
-
+source setup.sh
 DOCKER_DIR=${ROOT_DIR}
 DOCKER_FILE="${DOCKER_DIR}/Dockerfile"
 
@@ -62,17 +62,17 @@ fi
 echo "User id is: $USER_ID"
 echo "Group id is: $GROUP_ID"
 
-docker build -f Dockerfile --target builder --build-arg SPARK_VERSION=$SPARK_VERSION -t spark_build .
-echo "Done building spark_build docker"
+docker build -f Dockerfile --target v${DIKE_VERSION}_builder --build_arg SPARK_VERSION=$SPARK_VERSION -t v${DIKE_VERSION}_spark_build .
+echo "Done building v${DIKE_VERSION}_spark_build docker"
 
-docker build -f Dockerfile --build-arg SPARK_VERSION=$SPARK_VERSION -t spark_run .
-echo "Done building spark_run docker"
+docker build -f Dockerfile --build-arg SPARK_VERSION=$SPARK_VERSION -t v${DIKE_VERSION}_spark_run .
+echo "Done building v${DIKE_VERSION}_spark_run docker"
 
 # Set the home directory in the Docker container.
 DOCKER_HOME_DIR=${DOCKER_HOME_DIR:-/home/${USER_NAME}}
 
-docker build -t "spark-build-${USER_NAME}" - <<UserSpecificDocker
-FROM spark_build
+docker build -t "v${DIKE_VERSION}-spark-build-${USER_NAME}" - <<UserSpecificDocker
+FROM v${DIKE_VERSION}_spark_build
 RUN rm -f /var/log/faillog /var/log/lastlog
 RUN groupadd --non-unique -g ${GROUP_ID} ${USER_NAME}
 RUN useradd -g ${GROUP_ID} -u ${USER_ID} -k /root -m ${USER_NAME} -d "${DOCKER_HOME_DIR}"
@@ -87,10 +87,10 @@ RUN chmod 0600 ~/.ssh/authorized_keys
 EXPOSE 22
 
 UserSpecificDocker
-echo "Done building spark-build-${USER_NAME}"
+echo "Done building v${DIKE_VERSION}-spark-build-${USER_NAME}"
 
-docker build -t "spark-run-${USER_NAME}" - <<UserSpecificDocker
-FROM spark_run
+docker build -t "v${DIKE_VERSION}-spark-run-${USER_NAME}" - <<UserSpecificDocker
+FROM v${DIKE_VERSION}_spark_run
 RUN rm -f /var/log/faillog /var/log/lastlog
 RUN groupadd --non-unique -g ${GROUP_ID} ${USER_NAME}
 RUN useradd -g ${GROUP_ID} -u ${USER_ID} -k /root -m ${USER_NAME} -d "${DOCKER_HOME_DIR}"
@@ -105,6 +105,6 @@ RUN chmod 0600 ~/.ssh/authorized_keys
 EXPOSE 22
 
 UserSpecificDocker
-echo "Done building spark-run-${USER_NAME}"
+echo "Done building v${DIKE_VERSION}-spark-run-${USER_NAME}"
 
 echo "Done building dockers"

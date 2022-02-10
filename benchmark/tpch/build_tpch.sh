@@ -40,7 +40,7 @@ if [ "$1" == "-d" ]; then
     -v "${ROOT_DIR}/build/.ivy2:${DOCKER_HOME_DIR}/.ivy2" \
     -u "${USER_ID}" \
     --entrypoint /bin/bash -w /tpch/tpch-spark \
-    spark-build-${USER_NAME}
+    "v${DIKE_VERSION}-spark-build-${USER_NAME}"
 else
   docker run --rm -it --name tpch_build \
     --mount type=bind,source="$(pwd)"/../tpch,target=/tpch \
@@ -51,5 +51,5 @@ else
     -v "${ROOT_DIR}/build/.ivy2:${DOCKER_HOME_DIR}/.ivy2" \
     -u "${USER_ID}" \
     --entrypoint /tpch/scripts/build.sh \
-    spark-build-${USER_NAME}
+    "v${DIKE_VERSION}-spark-build-${USER_NAME}"
   fi

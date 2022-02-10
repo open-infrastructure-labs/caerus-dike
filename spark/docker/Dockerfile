@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:20.04 as builder_base
+FROM ubuntu:20.04 as v1_builder_base
 LABEL version="1.0"
 LABEL maintainer="Robert Foley <robfoley972@gmail.com>"
 
@@ -84,13 +84,13 @@ WORKDIR $SPARK_HOME
 ####
 #### Spark build docker stage.
 ####
-FROM builder_base as builder
+FROM v1_builder_base as v1_builder
 LABEL version="1.0"
 
 ####
 #### Spark run docker stage.
 ####
-FROM builder_base as run
+FROM v1_builder_base as v1_run
 LABEL version="1.0"
 
 COPY entry.sh /usr/local/bin/entry.sh
