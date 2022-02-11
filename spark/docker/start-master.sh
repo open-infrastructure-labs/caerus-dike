@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Include the setup for our cached local directories. (.m2, .ivy2, etc)
+source docker/spark_version
 source docker/setup.sh
 
 mkdir -p "${ROOT_DIR}/volume/logs"
@@ -37,8 +38,8 @@ else
   fi
 fi
 echo "removing work and logs"
-rm -rf build/spark-3.1.2/work/
-rm -rf build/spark-3.1.2/logs/
+rm -rf build/spark-$SPARK_VERSION/work/
+rm -rf build/spark-$SPARK_VERSION/logs/
 
 #  --cpuset-cpus="9-12" \
 if [ ${START_LOCAL} == "YES" ]; then
@@ -67,7 +68,7 @@ if [ ${START_LOCAL} == "YES" ]; then
   -v ${ROOT_DIR}/bin/:${DOCKER_HOME_DIR}/bin \
   -e RUNNING_MODE=${RUNNING_MODE} \
   -u ${USER_ID} \
-  spark-run-${USER_NAME} ${CMD}"
+  v${DIKE_VERSION}-spark-run-${USER_NAME} ${CMD}"
 else
   DOCKER_RUN="docker run ${DOCKER_IT} --rm \
   -p 4040:4040 -p 6066:6066 -p 7077:7077 -p 8080:8080 -p 5005:5005 -p 18080:18080 \
@@ -98,7 +99,7 @@ else
   -e "AWS_EC2_METADATA_DISABLED=true" \
   -e RUNNING_MODE=${RUNNING_MODE} \
   -u ${USER_ID} \
-  spark-run-${USER_NAME} ${CMD}"
+  v${DIKE_VERSION}-spark-run-${USER_NAME} ${CMD}"
 fi
 if [ $RUNNING_MODE = "interactive" ]; then
   eval "${DOCKER_RUN}"

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source docker/spark_version
 source docker/setup.sh
 
 mkdir -p "${ROOT_DIR}/volume/logs"
@@ -20,8 +20,8 @@ if [ "$#" -ge 2 ] ; then
   CORES=$2
 fi
 echo "removing work and logs"
-rm -rf build/spark-3.1.2/work/
-rm -rf build/spark-3.1.2/logs/
+rm -rf build/spark-$SPARK_VERSION/work/
+rm -rf build/spark-$SPARK_VERSION/logs/
 
 echo "Workers: $WORKERS"
 echo "Cores: $CORES"

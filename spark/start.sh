@@ -3,3 +3,6 @@
 ./docker/start-master.sh && sleep 5 && ./docker/start-worker.sh
 
 sleep 5
+./docker/start-launcher.sh
+
+sleep 5

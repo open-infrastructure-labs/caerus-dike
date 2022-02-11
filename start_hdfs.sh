@@ -19,7 +19,7 @@ echo $CMDSTATUS
 if [ $CMDSTATUS -ne 0 ]; then
   pushd benchmark/tpch
   echo "Initialize tpch CSV database in hdfs"
-  ./run_tpch.sh --mode initCsv --protocol hdfs || (echo "*** failed tpch init of CSV for hdfs $?" ; exit 1)
+  ./run_tpch.sh --local --mode initCsv --protocol hdfs || (echo "*** failed tpch init of CSV for hdfs $?" ; exit 1)
   popd
 fi
 
